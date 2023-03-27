@@ -14,6 +14,7 @@ class ProfilePage extends StatelessWidget {
         body: Container(
       color: const Color(0xffF6F6F6),
       child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: SafeArea(
           child: Container(
             margin: EdgeInsets.symmetric(

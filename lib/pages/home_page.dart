@@ -14,7 +14,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     ScreenSize().init(context);
     return Scaffold(
+      backgroundColor: Color(0xffF6F6F6),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Container(
           decoration: BoxDecoration(
             color: Color(0xffF6F6F6),

@@ -14,6 +14,7 @@ class ForumPage extends StatelessWidget {
       body: Container(
         color: Color(0xffF6F6F6),
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: SafeArea(
             child: Column(
               children: [
