@@ -37,7 +37,32 @@ class ProgressPage extends StatelessWidget {
         color: const Color(0xffF6F6F6),
         height: double.infinity,
         child: Column(children: [
-          LocationDetailsCard(),
+          SlideBar(
+            categories: [
+              "25 JAN",
+              "13 FEB",
+              "21 FEB",
+              "1 MARCH",
+            ],
+          ),
+          Expanded(
+            child: ListView(
+              physics: BouncingScrollPhysics(),
+              children: [
+                SizedBox(
+                  height: ScreenSize.vertical! * 1,
+                ),
+                LocationDetailsCard(),
+                Container(
+                    margin: EdgeInsets.only(
+                      left: ScreenSize.horizontal! * 7,
+                      top: ScreenSize.vertical! * 3,
+                    ),
+                    height: ScreenSize.vertical! * 70,
+                    child: ProgressPageIndicator()),
+              ],
+            ),
+          )
         ]),
       ),
     );

@@ -41,6 +41,7 @@ dependencies:
   sticky_headers: ^0.3.0+2
   flutter_sticky_widgets: ^0.0.3
   google_fonts: ^4.0.3
+  another_stepper: ^1.2.2
 
 dev_dependencies:
   flutter_test:

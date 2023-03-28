@@ -74,7 +74,9 @@ class ProgressUpdateCardState extends State<ProgressUpdateCard> {
               child: Container(
                 width: ScreenSize.horizontal! * 75,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/4');
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xff47466D),
                     shape: RoundedRectangleBorder(
@@ -124,33 +126,35 @@ class _ProgressOfReportCardState extends State<ProgressOfReportCard> {
           SizedBox(
             width: ScreenSize.horizontal! * 3,
           ),
-          Column(
-            children: [
-              GreenUnderlinedText(
-                text: "Under maintenance...",
-                top: ScreenSize.vertical! * 1,
-                left: ScreenSize.horizontal! * 2,
-                height: ScreenSize.vertical! * 1.5,
-                width: ScreenSize.horizontal! * 35,
-                fontSize: ScreenSize.horizontal! * 3.5,
-              ),
-              SizedBox(
-                height: ScreenSize.vertical! * 1,
-              ),
-              Container(
-                width: ScreenSize.horizontal! * 35,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: const AspectRatio(
-                    aspectRatio: 20 / 9,
-                    child: Image(
-                      image: AssetImage("assets/map.png"),
-                      fit: BoxFit.fill, // use this
+          Container(
+            child: Column(
+              children: [
+                GreenUnderlinedText(
+                  text: "Under maintenance...",
+                  top: ScreenSize.vertical! * 1,
+                  left: ScreenSize.horizontal! * 2,
+                  height: ScreenSize.vertical! * 1.5,
+                  width: ScreenSize.horizontal! * 35,
+                  fontSize: ScreenSize.vertical! * 1.8,
+                ),
+                SizedBox(
+                  height: ScreenSize.vertical! * 1,
+                ),
+                Container(
+                  width: ScreenSize.horizontal! * 35,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: const AspectRatio(
+                      aspectRatio: 20 / 9,
+                      child: Image(
+                        image: AssetImage("assets/map.png"),
+                        fit: BoxFit.fill, // use this
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
