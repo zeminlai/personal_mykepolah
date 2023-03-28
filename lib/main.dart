@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mykepolah/pages/forum_page.dart';
 import 'package:mykepolah/pages/profile_page.dart';
 import 'package:mykepolah/pages/progress_page.dart';
+import 'package:mykepolah/pages/reports_page.dart';
 import 'pages/home_page.dart';
 
 void main() {
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
           '/2': (context) => ForumPage(),
           '/3': (context) => ProfilePage(),
           '/4': (context) => ProgressPage(),
+          '/5': (context) => ReportsPage(),
         });
   }
 }

@@ -46,7 +46,11 @@ class ProgressPageAppBar extends StatelessWidget {
 }
 
 class LocationDetailsCard extends StatelessWidget {
-  const LocationDetailsCard({super.key});
+  final String reportCategory;
+  final String imageNetwork;
+  final String address;
+  const LocationDetailsCard(
+      {super.key, required this.reportCategory, required this.imageNetwork, required this.address});
 
   @override
   Widget build(BuildContext context) {
@@ -88,13 +92,14 @@ class LocationDetailsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    height: ScreenSize.vertical! * 3.5,
+                    height: ScreenSize.vertical! * 4,
+                    width: ScreenSize.horizontal! * 38,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Pothole",
+                          reportCategory,
                           style: TextStyle(
                             fontSize: ScreenSize.horizontal! * 6,
                             fontWeight: FontWeight.w700,
@@ -106,6 +111,7 @@ class LocationDetailsCard extends StatelessWidget {
                           icon: Icon(Icons.more_vert_sharp),
                           padding: EdgeInsets.all(0),
                           iconSize: ScreenSize.horizontal! * 5,
+                          constraints: BoxConstraints(),
                         )
                       ],
                     ),
@@ -127,11 +133,10 @@ class LocationDetailsCard extends StatelessWidget {
                     width: ScreenSize.horizontal! * 37,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: const AspectRatio(
+                      child: AspectRatio(
                         aspectRatio: 4 / 3,
                         child: Image(
-                          image: NetworkImage(
-                              "https://www.dsf.my/wp-content/uploads/2022/09/Zero-Potholes-City-4-e1662538557206.jpg?v=1662453056"),
+                          image: NetworkImage(imageNetwork),
                           fit: BoxFit.fill, // use this
                         ),
                       ),
@@ -148,7 +153,15 @@ class LocationDetailsCard extends StatelessWidget {
 }
 
 class ProgressPageIndicator extends StatelessWidget {
-  const ProgressPageIndicator({super.key});
+  final String dateDay;
+  final String month;
+  final String reportCategory;
+  const ProgressPageIndicator({
+    super.key,
+    required this.dateDay,
+    required this.month,
+    required this.reportCategory,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -167,13 +180,12 @@ class ProgressPageIndicator extends StatelessWidget {
           ),
         ),
         Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SingleProgressSection(
               active: true,
-              date: "26 FEB",
+              date: "25 JAN",
               time: "12:23",
-              title: "Pothole is fixed!",
+              title: "Issue is fixed!",
               description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             ),
             SingleProgressSection(
@@ -263,7 +275,7 @@ class SingleProgressSection extends StatelessWidget {
               ),
               active
                   ? SizedBox(
-                      width: ScreenSize.horizontal! * 2,
+                      width: ScreenSize.horizontal! * 1,
                     )
                   : SizedBox(
                       width: ScreenSize.horizontal! * 3,
@@ -331,7 +343,8 @@ class SingleProgressSection extends StatelessWidget {
 
 class SlideBar extends StatefulWidget {
   final List<String> categories;
-  const SlideBar({super.key, required this.categories});
+  final Function(int) onTapIndex;
+  const SlideBar({super.key, required this.categories, required this.onTapIndex});
 
   @override
   State<SlideBar> createState() => _SlideBarState();
@@ -348,56 +361,56 @@ class _SlideBarState extends State<SlideBar> {
       height: size.height * 0.05,
       child: Expanded(
         child: ListView.builder(
-          physics: BouncingScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          itemCount: widget.categories.length,
-          itemBuilder: (context, index) => buildCategory(index),
-        ),
-      ),
-    );
-  }
+            physics: BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemCount: widget.categories.length,
+            itemBuilder: (context, index) {
+              Size size = MediaQuery.of(context).size;
 
-  Widget buildCategory(int index) {
-    Size size = MediaQuery.of(context).size;
+              final String text = widget.categories[index];
+              final TextStyle textStyle = GoogleFonts.nunitoSans(
+                fontWeight: FontWeight.w800,
+                fontSize: size.height * 0.025,
+                textStyle: TextStyle(
+                  color: selectedIndex == index ? Color(0xff47466D) : Colors.grey,
+                ),
+              );
+              Size _textSize(String text, TextStyle style) {
+                final TextPainter textPainter = TextPainter(
+                    text: TextSpan(text: text, style: style),
+                    maxLines: 1,
+                    textDirection: TextDirection.ltr)
+                  ..layout(minWidth: 0, maxWidth: double.infinity);
+                return textPainter.size;
+              }
 
-    final String text = widget.categories[index];
-    final TextStyle textStyle = GoogleFonts.nunitoSans(
-      fontWeight: FontWeight.w800,
-      fontSize: size.height * 0.025,
-      textStyle: TextStyle(
-        color: selectedIndex == index ? Color(0xff47466D) : Colors.grey,
-      ),
-    );
-    Size _textSize(String text, TextStyle style) {
-      final TextPainter textPainter = TextPainter(
-          text: TextSpan(text: text, style: style), maxLines: 1, textDirection: TextDirection.ltr)
-        ..layout(minWidth: 0, maxWidth: double.infinity);
-      return textPainter.size;
-    }
+              final Size txtSize = _textSize(text, textStyle);
 
-    final Size txtSize = _textSize(text, textStyle);
-
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            selectedIndex = index;
-          });
-        },
-        child: Stack(
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                  color: selectedIndex == index ? Color(0xffABEDD8) : Colors.transparent,
-                  borderRadius: BorderRadius.circular(15)),
-              margin: const EdgeInsets.only(top: 15, left: 8),
-              height: txtSize.height * 0.45,
-              width: txtSize.width,
-            ),
-            Text(text, style: textStyle),
-          ],
-        ),
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedIndex = index;
+                      widget.onTapIndex(index);
+                    });
+                  },
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                            color: selectedIndex == index ? Color(0xffABEDD8) : Colors.transparent,
+                            borderRadius: BorderRadius.circular(15)),
+                        margin: const EdgeInsets.only(top: 15, left: 8),
+                        height: txtSize.height * 0.45,
+                        width: txtSize.width,
+                      ),
+                      Text(text, style: textStyle),
+                    ],
+                  ),
+                ),
+              );
+            }),
       ),
     );
   }
